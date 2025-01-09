@@ -19,16 +19,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
 
-const {
-    PORT = 3000,
-    URL = 'mongodb://localhost:27017/ehtdb',
-} = process.env;
 
-mongoose.connect(URL, {
-    useNewUrlParser: true,
-    useCreateIndex: true,
-    useFindAndModify: false
-});
+mongoose.connect('mongodb://localhost:27017/ehtdb');
 
 app.get('/crash-test', () => {
     setTimeout(() => {
@@ -53,6 +45,6 @@ app.use((error, req, res, next) => {
     });
     next();
 });
-app.listen(PORT, () => {
-    console.log(`App listening on port ${PORT}`);
+app.listen(3000, () => {
+    console.log(`App listening on port ${3000}`);
 });
