@@ -1,7 +1,8 @@
-const modulesRouter = require('express').Router();
+const moduleRouter = require('express').Router();
 
-const { getModule } = require('../controllers/module');
+const { getModule, getModules } = require('../controllers/module');
 
-modulesRouter.get('/', getModule);
+moduleRouter.get('/', getModules)
+moduleRouter.get('/module', getModule);
 
-module.exports = modulesRouter;
+module.exports = moduleRouter;

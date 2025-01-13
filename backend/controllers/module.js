@@ -9,3 +9,9 @@ module.exports.getModule = (req, res, next) => {
         .then((module) => res.status(HTTP_STATUS_OK).send(module))
         .catch(next)
 }
+
+module.exports.getModules = (req, res, next) => {
+    Module.find({})
+        .then((modules) => res.send(modules))
+        .catch(next)
+}
