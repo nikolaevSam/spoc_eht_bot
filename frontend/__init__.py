@@ -131,5 +131,4 @@ def circuits_handler(message):
         bot.send_message(message.chat.id, f'RTD01: {ckt_rtd01}\n\nRTD02: {ckt_rtd02}')
         bot.send_message(message.chat.id, 'DOCUMENTS:', reply_markup=circuit_keyboard)
 
-print(user_id)
 bot.polling(none_stop=True, interval=0)
