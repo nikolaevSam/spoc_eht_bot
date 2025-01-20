@@ -1,15 +1,14 @@
 const mongoose = require('mongoose');
 
-const userSchema = new mongoose.Schema(
+const sisScheme = new mongoose.Schema(
     {
         name: {
             type: String,
             unique: true,
             require: true,
         },
-        type: {
+        description: {
             type: String,
-            default: 'user',
             require: true,
         },
         createdAt: {
@@ -19,4 +18,4 @@ const userSchema = new mongoose.Schema(
     }
 );
 
-module.exports = mongoose.model('user', userSchema);
+module.exports = mongoose.model('sises', sisScheme);

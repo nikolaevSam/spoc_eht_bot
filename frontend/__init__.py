@@ -9,7 +9,11 @@ sisLink = 'https://drive.ctr-hub.com/s/xGmZorFFCBpW3Nm?path=%2F10_SIS'
 modules_url = 'http://localhost:3000/modules'
 module_url = 'http://localhost:3000/modules/module'
 circuit_url = 'http://localhost:3000/circuits'
+user_url = 'http://localhost:3000/users'
+sises_url = 'http://localhost:3000/sises'
+sis_url = 'http://localhost:3000/sises/sis'
 modules = requests.get(modules_url)
+sises = requests.get(sises_url)
 
 main_keyboard = types.ReplyKeyboardMarkup(row_width=2, resize_keyboard=True)
 modules_button = types.KeyboardButton('/modules')
@@ -20,7 +24,13 @@ main_keyboard.add(modules_button,db_button,sis_button,info_button)
 
 module_keyboard = types.InlineKeyboardMarkup()
 for module in modules.json():
-    module_keyboard.add(types.InlineKeyboardButton(text=module['name'], callback_data=module['name']))
+    module_data_name = module['name']
+    module_keyboard.add(types.InlineKeyboardButton(text=module['name'], callback_data=f'module_{module_data_name}'))
+
+sis_keyboard = types.InlineKeyboardMarkup()
+for sis in sises.json():
+    sis_data_name = sis['name']
+    sis_keyboard.add(types.InlineKeyboardButton(text=sis['name'], callback_data=f'sis_{sis_data_name}'))
 
 @bot.message_handler(commands=['start'])
 def welcome_handler(message):
@@ -36,15 +46,24 @@ def db_handler(message):
 
 @bot.message_handler(commands=['sis'])
 def sis_handler(message):
-    bot.send_message(message.chat.id, f'LINK TO SIS:\n{sisLink}')
+    bot.send_message(message.chat.id, 'LIST OF SIS/SI:', reply_markup=sis_keyboard)
+    bot.send_message(message.chat.id, f'LINK TO SIS FOLDER:\n{sisLink}')
 
 @bot.message_handler(commands=['info'])
 def info_handler(message):
     bot.send_message(message.chat.id, 'SPOC EHT Team:\nArtem Ponomarev\nemail@ya.ru\nAnton Evstigneev\nemail@ya.ru\nNikolai Nikolaev\nemail@ya.ru')
 
-@bot.callback_query_handler(func=lambda call:True)
+@bot.callback_query_handler(func=lambda call:call.data.startswith('sis_'))
+def sis_button_handler(call):
+    sis = requests.get(sis_url, data={'name': f'{call.data[4:]}'})
+    sis_name = sis.json()['name']
+    sis_description = sis.json()['description']
+    bot.send_message(call.message.chat.id, f'{sis_name}\n\nDESCRIPTION:\n{sis_description}')
+
+
+@bot.callback_query_handler(func=lambda call:call.data.startswith('module_'))
 def module_button_handler(call):
-    module = requests.get(module_url, data={'name': f'{call.data}'})
+    module = requests.get(module_url, data={'name': f'{call.data[7:]}'})
     module_data = {
         'name': module.json()['name'],
         'BOM': module.json()['bom'],
@@ -85,7 +104,7 @@ def circuits_handler(message):
             'layout': circuit.json()['layout'],
             'pcl': circuit.json()['pcl'],
         }
-        
+        ckt_tag = circuit.json()['circuit']
         ckt_module = circuit.json()['module']
         ckt_deck = circuit.json()['deck']
         ckt_mb = circuit.json()['mb']
@@ -105,10 +124,12 @@ def circuits_handler(message):
         circuit_keyboard.add(ckt_iso_button)
         circuit_keyboard.add(ckt_layout_button)
         circuit_keyboard.add(ckt_cwd_button, ckt_pcl_button)
-        bot.send_message(message.chat.id, circuit.json()['circuit'], reply_markup=circuit_keyboard)
+        bot.send_message(message.chat.id, f'{ckt_tag}')
         bot.send_message(message.chat.id, f'MODULE: {ckt_module} (DECK {ckt_deck})\n\nJB: {ckt_jb}\n\nEHT CABLE: {ckt_eht_cable}')
         bot.send_message(message.chat.id, f'MB: {ckt_mb}\n\nMSP: {ckt_mb_msp}')
         bot.send_message(message.chat.id, f'TA: {ckt_ta}\n\nMSP: {ckt_ta_msp}')
         bot.send_message(message.chat.id, f'RTD01: {ckt_rtd01}\n\nRTD02: {ckt_rtd02}')
+        bot.send_message(message.chat.id, 'DOCUMENTS:', reply_markup=circuit_keyboard)
 
+print(user_id)
 bot.polling(none_stop=True, interval=0)
