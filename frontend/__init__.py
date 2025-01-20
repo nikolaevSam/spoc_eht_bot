@@ -34,7 +34,7 @@ for sis in sises.json():
 
 @bot.message_handler(commands=['start'])
 def welcome_handler(message):
-    bot.send_message(message.chat.id, 'Welcome to SPOC EHT Bot!', reply_markup=main_keyboard)
+    bot.send_message(message.chat.id, f'Hi @{message.from_user.username}! Bot can provide information about:\n1. Module\n2. Circuit\n3. SIS\nJust push button below ↓↓↓ or send circuits number.', reply_markup=main_keyboard)
 
 @bot.message_handler(commands=['modules'])
 def modules_handler(message):
