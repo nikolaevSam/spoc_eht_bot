@@ -15,13 +15,6 @@ sis_url = 'http://localhost:3000/sises/sis'
 modules = requests.get(modules_url)
 sises = requests.get(sises_url)
 
-main_keyboard = types.ReplyKeyboardMarkup(row_width=2, resize_keyboard=True)
-modules_button = types.KeyboardButton('/modules')
-db_button = types.KeyboardButton('/database')
-sis_button = types.KeyboardButton('/sis')
-info_button = types.KeyboardButton('/info')
-main_keyboard.add(modules_button,db_button,sis_button,info_button)
-
 module_keyboard = types.InlineKeyboardMarkup()
 for module in modules.json():
     module_data_name = module['name']
@@ -34,7 +27,14 @@ for sis in sises.json():
 
 @bot.message_handler(commands=['start'])
 def welcome_handler(message):
-    bot.send_message(message.chat.id, f'Hi @{message.from_user.username}! Bot can provide information about:\n1. Module\n2. Circuit\n3. SIS\nJust push button below ↓↓↓ or send circuits number.', reply_markup=main_keyboard)
+    start_command = types.BotCommand(command='start', description='\U0001F47EЗапустить бота')
+    modules_command = types.BotCommand(command='modules', description='\U0001F916Нажмите для получения списка модулей')
+    db_command = types.BotCommand(command='database', description='\U0001F5C2Нажмите для получения ссылки на DataBase')
+    sis_command = types.BotCommand(command='sis', description='\U0001F4C4Нажмите для получения ссылки на SIS/SI')
+    info_command = types.BotCommand(command='info', description='\U0001F9DFКонтакты SPOC EHT')
+    bot.set_my_commands([start_command, modules_command, db_command, sis_command, info_command])
+    bot.set_chat_menu_button(message.chat.id, types.MenuButtonCommands("Menu"))
+    bot.send_message(message.chat.id, f'Привет @{message.from_user.username}!\U0001F44B\nОтктой меню или просто пришли номер греющей цепи.')
 
 @bot.message_handler(commands=['modules'])
 def modules_handler(message):
