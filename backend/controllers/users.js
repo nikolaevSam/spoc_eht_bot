@@ -74,7 +74,7 @@ module.exports.deleteUser = (req, res, next) => {
         .catch((err) => {
             if (err.name === 'CastError') {
                 return next(new BadRequestError('Переданы некорректные данные.'));
-            }
+            };
             return next(err);
         });
 

@@ -5,18 +5,18 @@ const ConflictError = require('../errors/ConflictError');
 const { HTTP_STATUS_CREATED, HTTP_STATUS_OK } = require('../utils/constants');
 
 module.exports.getModule = (req, res, next) => {
-    const moduleName = req.body.name
+    const moduleName = req.body.name;
 
     Module.findOne({ name: moduleName })
         .orFail(new NotFoundError('Модуль не найден!'))
         .then((module) => res.status(HTTP_STATUS_OK).send(module))
-        .catch(next)
+        .catch(next);
 };
 
 module.exports.getModules = (req, res, next) => {
     Module.find({})
         .then((modules) => res.send(modules))
-        .catch(next)
+        .catch(next);
 };
 
 module.exports.createModule = (req, res, next) => {

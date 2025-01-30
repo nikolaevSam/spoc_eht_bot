@@ -8,7 +8,7 @@ const {
     deleteModule
 } = require('../controllers/module');
 
-modulesRouter.get('/', getModules)
+modulesRouter.get('/', getModules);
 modulesRouter.get('/module', getModule);
 modulesRouter.post('/', createModule);
 modulesRouter.put('/:moduleId', updateModule);
