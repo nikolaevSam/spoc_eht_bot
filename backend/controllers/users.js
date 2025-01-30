@@ -26,13 +26,13 @@ module.exports.createUser = (req, res, next) => {
     User.create({
         name, type
     })
-        .then(() => res.status(HTTP_STATUS_CREATED).send({ message: 'SIS добавлен!' }))
+        .then(() => res.status(HTTP_STATUS_CREATED).send({ message: `Пользователь ${name} добавлен!` }))
         .catch((err) => {
             if (err.code === 11000) {
-                return next(new ConflictError(`SIS ${name} уже существует.`));
+                return next(new ConflictError(`Пользователь ${name} уже существует.`));
             }
             if (err.name === 'ValidationError') {
-                return next(new BadRequestError('Переданы некорректные данные при создании греющей цепи.'));
+                return next(new BadRequestError('Переданы некорректные данные.'));
             } return next(err);
         });
 };
@@ -68,7 +68,7 @@ module.exports.deleteUser = (req, res, next) => {
     } = req.params;
 
     User.findById(userId)
-        .orFail(new NotFoundError('Пользователь не найден!'))
+        .orFail(new NotFoundError('Пользователь по указанному _id не найден.'))
         .then((user) => { return user.deleteOne() })
         .then(() => res.status(HTTP_STATUS_OK).send({ message: 'Пользователь удален!' }))
         .catch((err) => {

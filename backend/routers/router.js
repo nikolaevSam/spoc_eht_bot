@@ -9,7 +9,7 @@ const sisesRouter = require('./sises');
 router.use('/circuits', circuitsRouter);
 router.use('/modules', modulesRouter);
 router.use('/users', usersRouter);
-router.use('/sises', sisesRouter)
+router.use('/sises', sisesRouter);
 router.use('/*', () => {
     throw new NotFoundError('Not Found');
 });

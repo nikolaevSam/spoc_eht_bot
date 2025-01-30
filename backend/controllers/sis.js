@@ -7,7 +7,7 @@ const { HTTP_STATUS_CREATED, HTTP_STATUS_OK } = require('../utils/constants');
 module.exports.getSis = (req, res, next) => {
     const sis = req.body.name;
     Sis.findOne({ name: sis })
-        .orFail(new NotFoundError('SIS не найден!'))
+        .orFail(new NotFoundError(`SIS ${sis} не найден!`))
         .then((sis) => res.status(HTTP_STATUS_OK).send(sis))
         .catch(next);
 };
@@ -26,13 +26,13 @@ module.exports.createSis = (req, res, next) => {
     Sis.create({
         name, revision, description, status
     })
-        .then(() => res.status(HTTP_STATUS_CREATED).send({ message: 'SIS добавлен!' }))
+        .then(() => res.status(HTTP_STATUS_CREATED).send({ message: `SIS ${name} добавлен!` }))
         .catch((err) => {
             if (err.code === 11000) {
                 return next(new ConflictError(`SIS ${name} уже существует.`));
             }
             if (err.name === 'ValidationError') {
-                return next(new BadRequestError('Переданы некорректные данные при создании греющей цепи.'));
+                return next(new BadRequestError('Переданы некорректные данные.'));
             } return next(err);
         });
 };
@@ -55,7 +55,7 @@ module.exports.updateSis = (res, req, next) => {
     )
         .orFail(new NotFoundError('SIS по указанному _id не найден.'))
         .then((sis) => res.send(sis))
-        .then(() => res.status(HTTP_STATUS_OK).send({ message: 'SIS обновлен!' }))
+        .then(() => res.status(HTTP_STATUS_OK).send({ message: `SIS ${name} обновлен!` }))
         .catch((err) => {
             if (err.name === 'CastError') {
                 return next(new BadRequestError('Переданы некорректные данные.'));
@@ -68,7 +68,7 @@ module.exports.deleteSis = (req, res, next) => {
     const { sisId } = req.params;
 
     Sis.findById(sisId)
-        .orFail(new NotFoundError('Sis не найден!'))
+        .orFail(new NotFoundError('SIS по указанному _id не найден.'))
         .then((sis) => { return sis.deleteOne() })
         .then(() => res.status(HTTP_STATUS_OK).send({ message: 'Sis удален!' }))
         .catch((err) => {

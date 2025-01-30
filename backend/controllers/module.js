@@ -5,10 +5,10 @@ const ConflictError = require('../errors/ConflictError');
 const { HTTP_STATUS_CREATED, HTTP_STATUS_OK } = require('../utils/constants');
 
 module.exports.getModule = (req, res, next) => {
-    const moduleName = req.body.name;
+    const module = req.body.name;
 
-    Module.findOne({ name: moduleName })
-        .orFail(new NotFoundError('Модуль не найден!'))
+    Module.findOne({ name: module })
+        .orFail(new NotFoundError(`Модуль ${module} не найден!`))
         .then((module) => res.status(HTTP_STATUS_OK).send(module))
         .catch(next);
 };
@@ -45,13 +45,13 @@ module.exports.createModule = (req, res, next) => {
         pclHP,
         setList
     })
-        .then(() => res.status(HTTP_STATUS_CREATED).send({ message: 'Модуль добавлен!' }))
+        .then(() => res.status(HTTP_STATUS_CREATED).send({ message: `Модуль ${name} добавлен!` }))
         .catch((err) => {
             if (err.code === 11000) {
                 return next(new ConflictError(`Модуль ${name} уже существует.`));
             }
             if (err.name === 'ValidationError') {
-                return next(new BadRequestError('Переданы некорректные данные при создании греющей цепи.'));
+                return next(new BadRequestError('Переданы некорректные данные.'));
             } return next(err);
         });
 };
@@ -89,7 +89,7 @@ module.exports.updateModule = (req, res, next) => {
     )
     .orFail(new NotFoundError('Модуль по указанному _id не найдена.'))
     .then((module) => res.send(module))
-    .then(() => res.status(HTTP_STATUS_OK).send({ message: 'Модуль обновлен!' }))
+    .then(() => res.status(HTTP_STATUS_OK).send({ message: `Модуль ${name} обновлен!` }))
     .catch((err) => {
         if (err.name === 'CastError') {
             return next(new BadRequestError('Переданы некорректные данные.'));
@@ -102,7 +102,7 @@ module.exports.deleteModule = (req, res, next) => {
     const { moduleId } = req.params;
 
     Module.findById(moduleId)
-        .orFail(new NotFoundError('Модуль не найдена!'))
+        .orFail(new NotFoundError('Модуль по указанному _id не найдена.'))
         .then((module) => { return module.deleteOne() })
         .then(() => res.status(HTTP_STATUS_OK).send({ message: 'Модуль удален!' }))
         .catch((err) => {
