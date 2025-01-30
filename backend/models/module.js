@@ -13,7 +13,7 @@ const moduleSchema = new mongoose.Schema(
             default: 'https://drive.ctr-hub.com/s/xGmZorFFCBpW3Nm',
             require: true,
             validate: {
-                validator: (url) => validator.isEmail(url),
+                validator: (url) => validator.isURL(url),
                 message: 'Неккоректный URL',
             },
         },
@@ -22,7 +22,7 @@ const moduleSchema = new mongoose.Schema(
             default: 'https://drive.ctr-hub.com/s/xGmZorFFCBpW3Nm',
             require: true,
             validate: {
-                validator: (url) => validator.isEmail(url),
+                validator: (url) => validator.isURL(url),
                 message: 'Неккоректный URL',
             },
         },
@@ -31,7 +31,7 @@ const moduleSchema = new mongoose.Schema(
             default: 'https://drive.ctr-hub.com/s/xGmZorFFCBpW3Nm',
             require: true,
             validate: {
-                validator: (url) => validator.isEmail(url),
+                validator: (url) => validator.isURL(url),
                 message: 'Неккоректный URL',
             },
         },
@@ -40,7 +40,7 @@ const moduleSchema = new mongoose.Schema(
             default: 'https://drive.ctr-hub.com/s/xGmZorFFCBpW3Nm',
             require: true,
             validate: {
-                validator: (url) => validator.isEmail(url),
+                validator: (url) => validator.isURL(url),
                 message: 'Неккоректный URL',
             },
         },
@@ -49,7 +49,7 @@ const moduleSchema = new mongoose.Schema(
             default: 'https://drive.ctr-hub.com/s/xGmZorFFCBpW3Nm',
             require: true,
             validate: {
-                validator: (url) => validator.isEmail(url),
+                validator: (url) => validator.isURL(url),
                 message: 'Неккоректный URL',
             },
         },
@@ -58,7 +58,7 @@ const moduleSchema = new mongoose.Schema(
             default: 'https://drive.ctr-hub.com/s/xGmZorFFCBpW3Nm',
             require: true,
             validate: {
-                validator: (url) => validator.isEmail(url),
+                validator: (url) => validator.isURL(url),
                 message: 'Неккоректный URL',
             },
         },
@@ -67,7 +67,7 @@ const moduleSchema = new mongoose.Schema(
             default: 'https://drive.ctr-hub.com/s/xGmZorFFCBpW3Nm',
             require: true,
             validate: {
-                validator: (url) => validator.isEmail(url),
+                validator: (url) => validator.isURL(url),
                 message: 'Неккоректный URL',
             },
         },
@@ -76,7 +76,7 @@ const moduleSchema = new mongoose.Schema(
             default: 'https://drive.ctr-hub.com/s/xGmZorFFCBpW3Nm',
             require: true,
             validate: {
-                validator: (url) => validator.isEmail(url),
+                validator: (url) => validator.isURL(url),
                 message: 'Неккоректный URL',
             },
         },
@@ -85,7 +85,7 @@ const moduleSchema = new mongoose.Schema(
             default: 'https://drive.ctr-hub.com/s/xGmZorFFCBpW3Nm',
             require: true,
             validate: {
-                validator: (url) => validator.isEmail(url),
+                validator: (url) => validator.isURL(url),
                 message: 'Неккоректный URL',
             },
         },   

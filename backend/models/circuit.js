@@ -16,35 +16,35 @@ const circuitSchema = new mongoose.Schema(
             type: String,
             require: true,
         },
-        MB: {
+        mb: {
             type: String,
             require: true,
         },
-        MB_MSP: {
+        mbmsp: {
             type: String,
             require: true,
         },
-        TA: {
+        ta: {
             type: String,
             require: true,
         },
-        TA_MSP: {
+        tamsp: {
             type: String,
             require: true,
         },
-        RTD01: {
+        rtd01: {
             type: String,
             require: true,
         },
-        RTD02: {
+        rtd02: {
             type: String,
             require: true,
         },
-        JB: {
+        jb: {
             type: String,
             require: true,
         },
-        ehtCable: {
+        ehtcable: {
             type: String,
             require: true,
         },
@@ -53,7 +53,7 @@ const circuitSchema = new mongoose.Schema(
             default: 'https://drive.ctr-hub.com/s/xGmZorFFCBpW3Nm',
             require: true,
             validate: {
-                validator: (url) => validator.isEmail(url),
+                validator: (url) => validator.isURL(url),
                 message: 'Неккоректный URL',
             },
         },
@@ -62,7 +62,7 @@ const circuitSchema = new mongoose.Schema(
             default: 'https://drive.ctr-hub.com/s/xGmZorFFCBpW3Nm',
             require: true,
             validate: {
-                validator: (url) => validator.isEmail(url),
+                validator: (url) => validator.isURL(url),
                 message: 'Неккоректный URL',
             },
         },
@@ -71,7 +71,7 @@ const circuitSchema = new mongoose.Schema(
             default: 'https://drive.ctr-hub.com/s/xGmZorFFCBpW3Nm',
             require: true,
             validate: {
-                validator: (url) => validator.isEmail(url),
+                validator: (url) => validator.isURL(url),
                 message: 'Неккоректный URL',
             },
         },
@@ -80,7 +80,7 @@ const circuitSchema = new mongoose.Schema(
             default: 'https://drive.ctr-hub.com/s/xGmZorFFCBpW3Nm',
             require: true,
             validate: {
-                validator: (url) => validator.isEmail(url),
+                validator: (url) => validator.isURL(url),
                 message: 'Неккоректный URL',
             },
         },

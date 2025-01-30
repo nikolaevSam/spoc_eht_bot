@@ -7,9 +7,16 @@ const sisScheme = new mongoose.Schema(
             unique: true,
             require: true,
         },
+        revision: {
+            type: String,
+            require: true,
+        },
         description: {
             type: String,
             require: true,
+        },
+        status: {
+            type: String,
         },
         createdAt: {
             type: Date,

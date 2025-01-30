@@ -1,8 +1,17 @@
-const moduleRouter = require('express').Router();
+const modulesRouter = require('express').Router();
 
-const { getModule, getModules } = require('../controllers/module');
+const { 
+    getModule,
+    getModules,
+    createModule,
+    updateModule,
+    deleteModule
+} = require('../controllers/module');
 
-moduleRouter.get('/', getModules)
-moduleRouter.get('/module', getModule);
+modulesRouter.get('/', getModules)
+modulesRouter.get('/module', getModule);
+modulesRouter.post('/', createModule);
+modulesRouter.put('/:moduleId', updateModule);
+modulesRouter.delete('/:moduleId', deleteModule);
 
-module.exports = moduleRouter;
+module.exports = modulesRouter;
